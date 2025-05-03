@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHubからスプレッドシートにデータを送信</title>
+    <title>スプレッドシートにデータを送信</title>
 </head>
 <body>
     <h1>スプレッドシートにデータを送信</h1>
-    <input type="text" id="inputText" placeholder="入力してください">
+    <label for="inputText">データ:</label>
+    <input type="text" id="inputText" placeholder="入力してください"><br><br>
+
+    <label for="row">行番号:</label>
+    <input type="number" id="row" placeholder="行番号"><br><br>
+
+    <label for="col">列番号:</label>
+    <input type="number" id="col" placeholder="列番号"><br><br>
+
     <button onclick="sendData()">送信</button>
 
     <script>
         function sendData() {
             var inputText = document.getElementById('inputText').value;
-            var url = 'https://script.google.com/macros/s/AKfycbwImUh7nzJQIsNP0xdKNY5QJ6RE6_wFY72GJzfuK5mztQgMGc5Y3kX-F_gfMn1mu7cPfQ/exec'; // スクリプトURLをここに貼り付け
+            var row = document.getElementById('row').value;
+            var col = document.getElementById('col').value;
+            var url = 'https://script.google.com/macros/s/AKfycbxE0D5rvx8OkvaxInL20vnIKXvbmt3QGl19kNj18ax7xEiEtTQd1jTnrTI6CMVUNn7UrA/exec'; // スクリプトURLをここに貼り付け
 
+            // POSTリクエストを送信
             fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: 'inputText=' + encodeURIComponent(inputText)
+                body: 'inputText=' + encodeURIComponent(inputText) + 
+                      '&row=' + encodeURIComponent(row) + 
+                      '&col=' + encodeURIComponent(col)
             })
             .then(response => response.text())
             .then(data => {
@@ -33,3 +46,4 @@
     </script>
 </body>
 </html>
+
